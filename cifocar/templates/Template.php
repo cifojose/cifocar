@@ -11,7 +11,7 @@
 				</figure>
 				<hgroup>
 					<h1>Cifocar v 0.1</h1>
-					<h2>Para el desarrollo de aplicaciones web</h2>
+					<h2>Gestión de un concesionario de compra y venta de coches</h2>
 				</hgroup>
 			</header>
 		<?php }
