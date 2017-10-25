@@ -10,7 +10,7 @@
 					</a>
 				</figure>
 				<hgroup>
-					<h1>RMF - RobS Micro Framework</h1>
+					<h1>Cifocar v 0.1</h1>
 					<h2>Para el desarrollo de aplicaciones web</h2>
 				</hgroup>
 			</header>
