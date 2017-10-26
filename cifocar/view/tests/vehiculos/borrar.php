@@ -1,7 +1,8 @@
 <?php
 require_once '../../../config/Config.php';
 require_once '../../../libraries/database_library.php';
-require_once '../../../model/MarcaModel.php';
+require_once '../../../model/VehiculoModel.php';
 
-MarcaModel::borrar("Nissan");
+
+VehiculoModel::borrar(7);
 echo "se carga?";

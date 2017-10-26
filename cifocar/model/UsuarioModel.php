@@ -1,14 +1,14 @@
 <?php
 	class UsuarioModel{
 		//PROPIEDADES
-		public $id, $user, $password, $nombre, $privilegio=100, $admin=0, $email, $imagen='', $fecha;
+		public $id, $user, $password, $nombre, $privilegio, $admin, $email, $imagen='', $fecha;
 			
 		//METODOS
 		//guarda el usuario en la BDD
 		public function guardar(){
 			$user_table = Config::get()->db_user_table;
 			$consulta = "INSERT INTO $user_table(user, password, nombre, privilegio, admin, email, imagen)
-			VALUES ('$this->user','$this->password','$this->nombre',100,0,'$this->email', '$this->imagen');";
+			VALUES ('$this->user', '$this->password', '$this->nombre', $this->privilegio, $this->admin, '$this->email', '$this->imagen');";
 				
 			return Database::get()->query($consulta);
 		}
@@ -44,7 +44,7 @@
 			
 			//si hay algun usuario retornar true sino false
 			$r = $resultado->num_rows;
-			$resultado->free(); //libera el recurso resultset
+			$resultado->free(); //libera el recurso resultado
 			return $r;
 		}
 		
@@ -56,6 +56,10 @@
 			$resultado = Database::get()->query($consulta);
 			
 			$us = $resultado->fetch_object('UsuarioModel');
+			
+			if(!$us)
+			    $us=NULL;
+			
 			$resultado->free();
 			
 			return $us;

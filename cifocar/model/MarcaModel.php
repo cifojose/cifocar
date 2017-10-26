@@ -5,39 +5,29 @@
 			
 		//METODOS
 		//Guarda nueva marca en la BDD
-		public function nueva(){
-			$consulta = "INSERT INTO marcas (marca) VALUES ('$this->marca');";
+		public static function nueva($marca){
+			$consulta = "INSERT INTO marcas (marca) VALUES ('$marca');";
 			return Database::get()->query($consulta);
 		}
 		
 		//Modificar marca en la BDD
-		public static function actualizar($marcaNueva, $marcaAntigua){
+		public static function modificar($marcaNueva, $marcaAntigua){
 			$consulta = "UPDATE marcas SET marca='$marcaNueva' WHERE marca='$marcaAntigua';";
 			return Database::get()->query($consulta);
 		}
 		
 		//eliminar marca en la BDD
-		public function borrar(){
-			$consulta = "DELETE FROM marcas WHERE marca='$this->marca';";
+		public static function borrar($marca){
+			$consulta = "DELETE FROM marcas WHERE marca='$marca';";
 			return Database::get()->query($consulta);
 		}
 		
-		//Listar una marca de la BDD
-		public static function getMarca($m){
-		    $consulta = "SELECT * FROM marcas WHERE marca=$m;";
-		    $resultado = Database::get()->query($consulta);
-		    $marca = $resultado->fetch_object('MarcaModel');
-		    //Liberar memoria
-		    $resultado->free();
-		    return $marca;
-		}
-		
 		//Listar todas las marcas de la BDD
-		public function getMarcas(){
+		public static function getMarcas(){
 		    $consulta = "SELECT * FROM marcas;";
 		    $resultado = Database::get()->query($consulta);
-		    $listaMarcas = array();
-		    while ($marca = $listaMarcas->fetch_object('MarcaModel'))
+		    $lista = array();
+		    while ($marca = $resultado->fetch_object('MarcaModel'))
 		        $listaMarcas[]=$marca;
 		    //Liberar memoria
 		    $resultado->free();
