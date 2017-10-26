@@ -51,7 +51,67 @@
 			}
 		}
 		
+		//PROCEDIMIENTO PARA LISTAR TODOS LOS USUARIOS
+	    public function listar(){
+	        //recuperar las recetas
+	        $this->load('model/UsuarioModel.php');
+	        $usuarios = UsuarioModel::getUsuarios();
+	        
+	        //cargar la vista del listado
+	        $datos = array();
+	        $datos['usuario'] = Login::getUsuario();
+	        $datos['usuarios'] = $usuarios;
+	        if(!Login::isAdmin())
+	            throw new Exception('Debe ser administrador para poder modificar usuarios');
+	        $this->load_view('view/usuarios/lista.php', $datos);
+	    }
+		
 
+	    //PROCEDIMIENTO PARA MODIFICAR PRIVILEGIOS DE USUARIOS
+	    public function editar($u=""){
+	        //comprobar que el usuario es admin
+	        if(!Login::isAdmin())
+	            throw new Exception('Debes ser administrador');
+	            
+	        //comprobar que me llega un id
+	        if(!$u)
+	           throw new Exception('No se indicó la id del usuario');
+	                
+            //recuperar la receta con esa id
+            $this->load('model/UsuarioModel.php');
+            $usuarioM = UsuarioModel::getUsuario($u);
+            
+            //comprobar que existe el usuario
+            if(!$usuarioM)
+                throw new Exception('No existe el usuario');
+	                    
+            //si no me están enviando el formulario
+            if(empty($_POST['modificar'])){
+                //poner el formulario
+                $datos = array();
+                $datos['usuario'] = Login::getUsuario();
+                $datos['usuarioM'] = $usuarioM;
+                $this->load_view('view/usuarios/admin_modifica.php', $datos);
+                
+            }else{
+                //en caso contrario
+                $conexion = Database::get();
+                //actualizar los campos del usuario con los datos POST
+                $usuarioM->privilegio= $conexion->real_escape_string($_POST['privilegio']);
+                $usuarioM->admin = empty($_POST['admin'])? 0 : 1;;
+                	                        
+                //modificar el usuario en la BDD
+                if(!$usuarioM->actualizarPrivi())
+                    throw new Exception('No se pudo actualizar');
+                    //cargar la vista de éxito
+                    $datos = array();
+                    $datos['usuario'] = Login::getUsuario();
+                    $datos['mensaje'] = "Datos del usuario <a href='index.php?controlador=Usuario&operacion=ver&parametro=$usuarioM->user'>'$usuarioM->user'</a> actualizados correctamente.";
+                    $this->load_view('view/exito.php', $datos);
+            }
+	    }
+	    
+	    
 		//PROCEDIMIENTO PARA MODIFICAR UN USUARIO
 		public function modificacion(){
 			//si no hay usuario identificado... error
@@ -165,6 +225,27 @@
 				$datos['mensaje'] = 'Eliminado OK';
 				$this->load_view('view/exito.php', $datos);
 			}
+		}
+		
+		//PROCEDIMIENTO PARA VER LOS DETALLES DE UN USUARIO
+		public function ver($user=''){
+		    //comprobar que llega la ID
+		    if(!$user)
+		        throw new Exception('No se ha indicado el User del usuario');
+		        
+		        //recuperar la receta con la ID seleccionada
+		        $this->load('model/UsuarioModel.php');
+		        $usuarioM = UsuarioModel::getUsuario($user);
+		        
+		        //comprobar que la receta existe
+		        if(!$usuarioM)
+		            throw new Exception('No existe el usuario con el User '.$user);
+		            
+		            //cargar la vista de detalles
+		            $datos = array();
+		            $datos['usuario'] = Login::getUsuario();
+		            $datos['usuarioM'] = $usuarioM;
+		            $this->load_view('view/usuarios/detalles.php', $datos);
 		}
 		
 	}
