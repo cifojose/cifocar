@@ -1,4 +1,4 @@
-<?php
+0<?php
 	class VehiculoModel{
 		//PROPIEDADES
 		public $id, $matricula, $modelo, $color, $precio_venta, $precio_compra, $kms, $caballos, $fecha_venta, $estado, $any_matriculacion;

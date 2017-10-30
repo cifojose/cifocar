@@ -19,6 +19,13 @@
 				//comprueba si me hacen login o logout y recupera el usuario activo
 				Login::comprobar();
 				
+				//Si hacen un logout, elimino lo que llegue por GET
+				//y asi el flujo del programa tendra que cargar
+				//el controlador y la operacion por defecto
+				//indicadas en el CONFIG.PHP
+				if($_POST['logout'])
+				    unset($_GET);
+				
 				//GESTION DE PETICIONES (invocar el controlador adecuado)
 				//las peticiones serán en formato: 
 				//index.php?controlador=Usuario&operacion=registro

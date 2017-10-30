@@ -5,7 +5,10 @@
 
 		//PROCEDIMIENTO PARA REGISTRAR UN USUARIO
 		public function registro(){
-
+            //verificar si el usuario es administrador
+            if(!Login::isAdmin())
+                throw new Exception('Debe tener permisos de administrador para crear un nuevo usuario');
+             
 			//si no llegan los datos a guardar
 			if(empty($_POST['guardar'])){
 				
@@ -26,6 +29,8 @@
 				$u->user = $conexion->real_escape_string($_POST['user']);
 				$u->password = MD5($conexion->real_escape_string($_POST['password']));
 				$u->nombre = $conexion->real_escape_string($_POST['nombre']);
+				$u->privilegio = $_POST['privilegio'];
+				$u->admin = $_POST['admin'];
 				$u->email = $conexion->real_escape_string($_POST['email']);
 				$u->imagen = Config::get()->default_user_image;
 				
@@ -91,13 +96,14 @@
                 $datos = array();
                 $datos['usuario'] = Login::getUsuario();
                 $datos['usuarioM'] = $usuarioM;
-                $this->load_view('view/usuarios/admin_modifica.php', $datos);
+                $this->load_view('view/usuarios/modificacionAdmin.php', $datos);
                 
             }else{
                 //en caso contrario
                 $conexion = Database::get();
                 //actualizar los campos del usuario con los datos POST
-                $usuarioM->privilegio= $conexion->real_escape_string($_POST['privilegio']);
+                $usuarioM->email=$conexion->real_escape_string($_POST['email']);
+                $usuarioM->privilegio= $_POST['privilegio'];
                 $usuarioM->admin = empty($_POST['admin'])? 0 : 1;;
                 	                        
                 //modificar el usuario en la BDD
