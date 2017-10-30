@@ -30,12 +30,13 @@
 		}
 		
 		//Listar todas las marcas de la BDD (con filtros)
-		public static function getMarcas($l=10, $o=0, $texto='', $sentido='ASC'){
+		public static function getMarcas($l=0, $o=0, $texto='', $sentido='ASC'){
 		    $consulta = "SELECT * FROM marcas
                          WHERE marca LIKE '%$texto%'
-                         OREDER BY marca $sentido
-		                 LIMIT $l
-                         OFFSET $o;";
+                         OREDER BY marca $sentido ";
+		    if($l>0) $consulta.="LIMIT $l ";
+		    if($o>0) $consulta.="OFFSET $o ";
+		    
 		    $resultado = Database::get()->query($consulta);
 		    $lista = array();
 		    while ($marca = $resultado->fetch_object('MarcaModel'))

@@ -86,11 +86,11 @@
 		    while($vehiculo = $resultados->fetch_object('VehiculoModel'))
 		        $lista[] = $vehiculo;
 		        
-		        //liberar memoria
-		        $resultados->free();
-		        
-		        //retornar la lista de VehiculoModel
-		        return $lista;
+	        //liberar memoria
+	        $resultados->free();
+	        
+	        //retornar la lista de VehiculoModel
+	        return $lista;
 		}
 		
 		//metodo para vender vehiculos (modifica estado a vendido)

@@ -23,7 +23,7 @@
 				//y asi el flujo del programa tendra que cargar
 				//el controlador y la operacion por defecto
 				//indicadas en el CONFIG.PHP
-				if($_POST['logout'])
+				if(!empty($_POST['logout']))
 				    unset($_GET);
 				
 				//GESTION DE PETICIONES (invocar el controlador adecuado)

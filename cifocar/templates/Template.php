@@ -47,19 +47,28 @@
 		//PONE EL MENU DE LA PAGINA
 		public static function menu($usuario){ ?>
 			<nav>
+				<?php if($usuario && $usuario->privilegio==1){ //poner el menu del responsable de compras?>
 				<ul class="menu">
-					<li><a href="index.php">Inicio</a></li>
-					<li><a href="index.php?controlador=Usuario&operacion=registro">Registro</a></li>
-					<li><a href="index.php?controlador=Usuario&operacion=editar&parametro=<?php $usuario->user ?>">Modificar</a></li>
-					<li><a href="index.php?controlador=Usuario&operacion=listar">Listar</a></li>
+					<li><a href="index.php?controlador=Vehiculos&operacion=listar">Listar vehiculos</a></li>
+					<li><a href="index.php?controlador=Vehiculos&operacion=nueva">Nuevo vehículo</a></li>
+					<li><a href="index.php?controlador=Vehiculos&operacion=modificarEstado">Modificar estado del vehículo</a></li>
+					<li><a href="index.php?controlador=Vehiculos&operacion=ver">Detalles del vehículo</a></li>
 				</ul>
-				<?php 
-				//pone el menú del administrador
-				if($usuario && $usuario->admin){	?>
+				<?php }?>
+				
+				<?php if($usuario && $usuario->privilegio==2){ //poner el menu del vendedor?>
 				<ul class="menu">
-					<li><a href="#">ADMIN</a></li>
+					<li><a href="index.php?controlador=Vehiculos&operacion=listar">Listar vehiculos</a></li>
+					<li><a href="index.php?controlador=Vehiculos&operacion=modificarEstado">Modificar estado del vehículo</a></li>
+					<li><a href="index.php?controlador=Vehiculos&operacion=ver">Detalles del vehículo</a></li>
 				</ul>
-							
+				<?php }?>
+				
+				<?php if($usuario && $usuario->admin){	//pone el menú del administrador?>
+				<ul class="menu">
+					<li><a href="index.php?controlador=Usuario&operacion=registro">Nuevo usuario</a></li>
+					<li><a href="index.php?controlador=Usuario&operacion=listar">Listar usuarios</a></li>
+				</ul>
 				<?php }	?>
 			</nav>
 		<?php }
