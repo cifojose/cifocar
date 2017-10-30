@@ -50,6 +50,8 @@
 				<ul class="menu">
 					<li><a href="index.php">Inicio</a></li>
 					<li><a href="index.php?controlador=Usuario&operacion=registro">Registro</a></li>
+					<li><a href="index.php?controlador=Usuario&operacion=editar&parametro=<?php $usuario->user ?>">Modificar</a></li>
+					<li><a href="index.php?controlador=Usuario&operacion=listar">Listar</a></li>
 				</ul>
 				<?php 
 				//pone el menú del administrador

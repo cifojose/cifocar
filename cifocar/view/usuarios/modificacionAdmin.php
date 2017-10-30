@@ -5,7 +5,7 @@
 		<base href="<?php echo Config::get()->url_base;?>" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<meta charset="UTF-8">
-		<title>Modificación datos de usuario registrado</title>
+		<title>Modificación de privilegios de usuario</title>
 		<link rel="stylesheet" type="text/css" href="<?php echo Config::get()->css;?>" />
 	</head>
 	
@@ -20,12 +20,8 @@
 		?>
 		
 		<section id="content">
-			<a class="derecha" href="index.php?controlador=Usuario&operacion=baja">
-				<img src="images/buttons/delete.png" alt="darse de baja" class="logo" />
-				Darse de baja
-			</a>
 						
-			<h2>Formulario de modificación datos del usuario registrado</h2>
+			<h2>Formulario de modificación de privilegios de usuario</h2>
 			
 			<form method="post" enctype="multipart/form-data" autocomplete="off">
 				
@@ -36,31 +32,21 @@
 				
 				
 				<label>User:</label>
-				<input type="text" name="user" required="required" 
+				<input type="text" name="user" 
 					readonly="readonly" value="<?php echo $usuario->user;?>" /><br/>
 				
-				<label>Password actual:</label>
-				<input type="password" name="password" required="required" /><br/>
-				
-				<label>Nuevo password:</label>
-				<input type="password" name="newpassword" pattern=".{4,16}" title="4 a 16 caracteres"/>
-				<span class="mini">En blanco para no modificar el actual</span><br/>
-				
-				
-				<label>Nombre:</label>
-				<input type="text" name="nombre" required="required" 
-					value="<?php echo $usuario->nombre;?>"/><br/>
+				<label>Privilegio:</label>
+				<input type="number" name="privilegio"
+					value="<?php echo $usuario->privilegio;?>"/><br/>
 				
 				<label>Email:</label>
-				<input type="email" name="email" required="required" 
+				<input type="email" name="email"  
 					value="<?php echo $usuario->email;?>"/><br/>
 				
-				<label>Nueva imagen:</label>
-				<input type="hidden" name="MAX_FILE_SIZE" value="<?php echo $max_image_size;?>" />		
-				<input type="file" accept="image/*" name="imagen" />
-				<span class="mini">max <?php echo intval($max_image_size/1024);?>kb</span><br />
+				<label>Es Admin:</label>
+				<input type="checkbox" name="admin" 
+					value="1" checked=<?php echo empty($usuario->admin)? "":"checked";?>"/><br/>
 				
-				<label></label>
 				<input type="submit" name="modificar" value="modificar"/><br/>
 			</form>
 			
