@@ -9,7 +9,7 @@
 		public function index(){
 				//preparar los datos a pasar a la vista
 				$datos = array('usuario'=>Login::getUsuario());
-				
+				 
 				//cargar la vista
 				if(!Login::getUsuario())
 				    $this->load_view('view/welcome_message.php', $datos);
