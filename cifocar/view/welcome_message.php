@@ -22,7 +22,7 @@
     </figure>
 
 
-  <h1>Area de login</h1>
+  <h1>Área de login</h1>
   
   <form class="form" method="post" autocomplete="off">
   	<p class="name-help">Introduzca su nombre de usuario.</p>
