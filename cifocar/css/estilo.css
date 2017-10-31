@@ -16,7 +16,7 @@ RESET DE ESTILO Y REGLAS GENERALES
 }
 
 .izquierda{float: left;}
-.derecha{float: right;}
+.derecha{float: right; border:solid 2px red; padding:5px;}
 .clear{clear: both;}
 .mini{font-size: 0.8em;}
 .maxi{font-size: 1.2em;}
@@ -25,69 +25,49 @@ RESET DE ESTILO Y REGLAS GENERALES
 
 /////////WELCOME//////////
 
-	.centrar{
+.centrar{
+text-align:center; 	
+position: absolute;
+top:50%;
+left:50%;
+width:400px;
+margin-top:-250px;
+margin-left:-200px;
+height:500px;
+border:1px solid red;
+border-radius: 20px;
+padding:5px;
+}
 
-	text-align:center; 	
+.botonPersonalizado{
+text-decoration: none;
+margin: 40px;
+font-weight: 600;
+font-size: 20px;
+align:center; 
+color: #ffffff;
+background-color: red;
+border-radius: 50px;
+border: 0px solid black;
+letter-spacing: 0.2cm;
+padding: 3px 15px 6px 20px;
+box-shadow: 0px 5px 5px #C0C0C0;
+}
+ 
+.botonPersonalizado:hover{
+color: red;
+background-color: #ffffff;
+}
 
-	position: absolute;
-	top:50%;
-	left:50%;
-	width:400px;
+img{
+align:center; 
+width: 300px;
+margin: 0px;
+}
 
-	margin-top:-250px;
-	margin-left:-200px;
-	height:500px;
-	
-	border:1px solid red;
-	border-radius: 20px;
-	padding:5px;
-	}
-
-	.botonPersonalizado{
-    
-    text-decoration: none;
-    margin: 40px;
-    
-    
-    font-weight: 600;
-    font-size: 20px;
-    align:center; 
-    color: #ffffff;
-    
-    background-color: red;
-    border-radius: 50px;
-    border: 0px solid black;
-
-    letter-spacing: 0.2cm;
-
-
-
-	
-	
-	padding: 3px 15px 6px 20px;
-	box-shadow: 0px 5px 5px #C0C0C0;
-
-  }
-  
-  	.botonPersonalizado:hover{
-    color: red;
-    background-color: #ffffff;
-  }
-
-  img{
-
-  	align:center; 
-  	width: 300px;
-	/*height: px;*/
-	margin: 0px;
-	/*float: top;*/
-  }
-
-  h1{
-  	color:#7F7F7F;
-  }
-  
-  /////////////////////////////////
+h1{
+	color:#7F7F7F;
+}
 
 h1, h2, h3{
 	margin: 10px 0px 10px 10px;
@@ -107,6 +87,33 @@ img.logo{
 	height: 30px;
 	width: 30px;
 	vertical-align: middle;
+}
+.formulario{
+	border: solid 2px #99a;
+	padding: 5px;
+}
+
+.boton{
+	border:solid 1px orange;
+	background-color: #eef;
+	color:black;
+}
+.boton:hover{
+	cursor: pointer;
+	background-color: black;
+	color:#eef;
+}
+.filtro{
+	margin: auto;
+	width: 90%;
+	text-align: right;
+}
+.icono{
+	height: 25px;
+	width: 25px;
+}
+.celda{
+	text-align: center;
 }
 
 /* ------------------------------------------------------------------------------------
@@ -265,7 +272,6 @@ nav ul.menu>li:hover{
 footer{
 	padding: 20px;
 	background-color: #eef;
-	
 	background-image: url('../images/logos/wide.png');
 	background-repeat: no-repeat;
 	background-size: 40%;
