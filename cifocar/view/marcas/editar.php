@@ -5,7 +5,7 @@
 		<base href="<?php echo Config::get()->url_base;?>" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<meta charset="UTF-8">
-		<title>Baja de usuarios</title>
+		<title>Editar marca</title>
 		<link rel="stylesheet" type="text/css" href="<?php echo Config::get()->css;?>" />
 	</head>
 	
@@ -16,24 +16,23 @@
 			if(!$usuario) Template::login(); //pone el formulario de login
 			else Template::logout($usuario); //pone el formulario de logout
 			Template::header(); //pone el header
-			//Template::menu($usuario); //pone el menú
+			Template::menu($usuario); //pone el menú
 		?>
 		
 		<section id="content">
-			<h2>Formulario de baja de usuario</h2>
-			<p>Por favor, confirma tu solicitud de baja introduciendo el password asociado a tu cuenta.</p>
-		
-			<form class="formulario" method="post" autocomplete="off">
-				<label>User:</label>
-				<input type="text" readonly="readonly" value="<?php echo $usuario->user;?>" /><br/>
+						
+			<h2>Formulario de edición de marcas</h2>
+			
+			<form class="formulario" method="post" enctype="multipart/form-data" autocomplete="off">
 				
-				<label>Password:</label>
-				<input type="password" name="password" required="required"/><br/>
-				
-				<label></label>
-				<input class="boton" type="submit" name="confirmar" value="Confirmar"/>
+				<label>Marca:</label>
+				<input type="text" name="marcaNueva" value="<?php echo $marcaAntigua;?>" /><br/>
+								
+				<input class="boton" type="submit" name="modificar" value="modificar"/>
 				<input class="boton" type="button" name="cancelar" value="Cancelar" onclick="history.back();"/><br/>
 			</form>
+			
+				
 		</section>
 		
 		<?php Template::footer();?>

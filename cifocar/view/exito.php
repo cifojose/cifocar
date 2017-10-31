@@ -10,17 +10,18 @@
 	
 	<body>
 		<?php 
-			Template::header(); //pone el header
+			
 
 			if(!$usuario) Template::login(); //pone el formulario de login
 			else Template::logout($usuario); //pone el formulario de logout
-			
-			Template::menu($usuario); //pone el menú
+			Template::header(); //pone el header
+			//Template::menu($usuario); //pone el menú
 		?>
 		
 		<section id="content" class="exito">
 			<h2>Exito</h2>
-			<?php echo '<p>'.$mensaje.'</p>'; ?>
+			<?php echo '<p>'.$mensaje.'</p><br/>'; ?>
+			<input class="boton" type="button" name="inicio" value="Inicio" onclick="location.href='index.php';"/><br/>
 		</section>
 		
 		<?php Template::footer();?>
