@@ -16,16 +16,14 @@
 		?>
 
 		<div class="centrar">
-	<figure>
-    	<img src="images/logos/logo.png" />
-    </figure>
+			<figure>
+    			<img src="images/logos/logo.png" />
+    		</figure>
 
 
-  <h1>Area de login</h1>
+  			<h1>Area de login</h1>
   
-   bla blab lablablabl
-</div>
-		
-		
+			bla blab lablablabl
+		</div>
     </body> 
 </html>

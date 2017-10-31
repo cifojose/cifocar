@@ -17,27 +17,26 @@
 		?>
 
 		<div class="centrar">
-	<figure>
-    	<img src="images/logos/logo.png" />
-    </figure>
-
+			<figure>
+    			<img src="images/logos/logo.png" />
+    		</figure>
  
-  <h1>Area de login</h1>
+			<h1>Área de login</h1>
   
-  <form class="form" method="post" autocomplete="off">
-  	<p>Introduzca su nombre de usuario.</p>
-    <input type="text" name="user"  placeholder="usuario" required="required">
-    <div>
+			<form class="form" method="post" autocomplete="off">
+				<p>Introduzca su nombre de usuario.</p>
+			<input type="text" name="user"  placeholder="usuario" required="required">
+			<div>
       
-    </div>
-    <p>Introduzca su clave de acceso.</p>
-    <input type="password" name="password" placeholder="clave" required="required">
-     <div>
+			</div>
+			<p>Introduzca su clave de acceso.</p>
+			<input type="password" name="password" placeholder="clave" required="required">
+			<div>
       
-    </div>
-    <input type="submit" name="login" class="botonPersonalizado" value="Acceder">
-  </form>
-</div>
+			</div>
+			<input type="submit" name="login" class="botonPersonalizado" value="Acceder">
+			</form>
+		</div>
 		
 		
     </body> 
