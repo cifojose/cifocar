@@ -11,9 +11,8 @@
 	
 	<body>
 		<?php 
-			
-			//if(!$usuario) Template::login(); //pone el formulario de login
-			//else Template::logout($usuario); //pone el formulario de logout
+			if(!$usuario) Template::login(); //pone el formulario de login
+			else Template::logout($usuario); //pone el formulario de logout
 		?>
 
 		<div class="centrar">
@@ -24,19 +23,7 @@
 
   <h1>Area de login</h1>
   
-  <form class="form" method="post" autocomplete="off">
-  	<p>Introduzca su nombre de usuario.</p>
-    <input type="text" name="user"  placeholder="usuario" required="required">
-    <div>
-      
-    </div>
-    <p>Introduzca su clave de acceso.</p>
-    <input type="password" name="password" placeholder="clave" required="required">
-     <div>
-      
-    </div>
-    <input type="submit" name="login" class="botonPersonalizado" value="Acceder">
-  </form>
+   bla blab lablablabl
 </div>
 		
 		
