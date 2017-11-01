@@ -16,24 +16,20 @@
 			if(!$usuario) Template::login(); //pone el formulario de login
 			else Template::logout($usuario); //pone el formulario de logout
 			Template::header(); //pone el header
-			//Template::menu($usuario); //pone el menú
+			Template::menu($usuario); //pone el menú
 		?>
 		
 		<section id="content">
 						
-			<h2>Formulario de modificación datos del usuario registrado</h2>
+			<h2 style="text-align: center; color:blue">Modificación de datos del usuario actual</h2>
 			
 			<form class="formulario" method="post" enctype="multipart/form-data" autocomplete="off">
 				
-				<figure>
-					<img class="imagenactual" src="<?php echo $usuario->imagen;?>" 
-						alt="<?php echo  $usuario->user;?>" />
+				<figure class="avatar">
+					<img class="imagenactual" src="<?php echo $usuario->imagen;?>" alt="<?php echo  $usuario->user;?>" />
+					<figcaption>Avatar</figcaption>
 				</figure>
-				<a class="derecha" href="index.php?controlador=Usuario&operacion=baja">
-					<img src="images/buttons/delete.png" alt="darse de baja" class="logo" />
-					Darse de baja
-				</a>
-				
+								
 				<label>User:</label>
 				<input type="text" name="user" required="required" 
 					readonly="readonly" value="<?php echo $usuario->user;?>" /><br/>
@@ -54,7 +50,7 @@
 				<input type="email" name="email" required="required" 
 					value="<?php echo $usuario->email;?>"/><br/>
 				
-				<label>Nueva imagen:</label>
+				<label>Nuevo avatar:</label>
 				<input type="hidden" name="MAX_FILE_SIZE" value="<?php echo $max_image_size;?>" />		
 				<input type="file" accept="image/*" name="imagen" />
 				<span class="mini">max <?php echo intval($max_image_size/1024);?>kb</span><br />

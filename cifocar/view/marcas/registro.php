@@ -5,7 +5,7 @@
 		<base href="<?php echo Config::get()->url_base;?>" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<meta charset="UTF-8">
-		<title>Editar marca</title>
+		<title>Registro de usuarios</title>
 		<link rel="stylesheet" type="text/css" href="<?php echo Config::get()->css;?>" />
 	</head>
 	
@@ -13,26 +13,22 @@
 		<?php 
 			
 
-			if(!$usuario) Template::login(); //pone el formulario de login
-			else Template::logout($usuario); //pone el formulario de logout
-			Template::header(); //pone el header
-			Template::menu($usuario); //pone el menú
+		if($usuario)Template::logout($usuario); //pone el formulario de login
+			
+		Template::header(); //pone el header
+		Template::menu($usuario); //pone el menú
 		?>
 		
 		<section id="content">
-						
-			<h2>Modificación de marcas</h2>
-			
+			<h2 style='text-align:center; color:blue'>Nueva marca</h2>
 			<form class="formulario" method="post" enctype="multipart/form-data" autocomplete="off">
-				
 				<label>Marca:</label>
-				<input type="text" name="marcaNueva" value="<?php echo $marcaAntigua;?>" /><br/>
-								
-				<input class="boton" type="submit" name="modificar" value="modificar"/>
-				<input class="boton" type="button" name="cancelar" value="Cancelar" onclick="history.back();"/><br/>
-			</form>
-			
+				<input type="text" name="marca" required="required" /><br/>
 				
+				<input class="boton" type="submit" name="guardar" value="Guardar"/>
+				<input class="boton" type="button" name="cancelar" value="Cancelar" onclick="location.href='index.php';"/><br/>
+			
+			</form>
 		</section>
 		
 		<?php Template::footer();?>

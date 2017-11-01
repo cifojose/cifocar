@@ -48,13 +48,14 @@
 			<table>
 				<tr>
 					<th>Marca</th>
-					<th>Operaciones</th>
+					<th colspan="2">Operaciones</th>
 				</tr>
 				<?php
 				foreach($marcas as $marca){
 				    echo "<tr>";
 				        echo "<td class='celda'>$marca</td>";
 				        echo "<td class='foto celda'><a href='index.php?controlador=Marca&operacion=editar&parametro=$marca'><img class='icono' src='images/buttons/edit.png' alt='editar marca' title='editar marca'/></a></td>";
+				        echo "<td class='foto celda'><a href='index.php?controlador=Marca&operacion=borrar&parametro=$marca'><img class='icono' src='images/buttons/delete.png' alt='editar marca' title='borrar marca'/></a></td>";
 				    echo "</tr>";
 				}
 				?>
@@ -63,29 +64,26 @@
 				<?php
     				//poner enlace a la página anterior
     				if($paginaActual>1){
-    				    echo "<li><a href='index.php?controlador=Receta&operacion=listar&parametro=1'>Primera</a></li>";
+    				    echo "<li><a href='index.php?controlador=Marca&operacion=listar&parametro=1'>Primera</a></li>";
     				}
 				
 				    //poner enlace a la página anterior
     				if($paginaActual>2){
-    				    echo "<li><a href='index.php?controlador=Receta&operacion=listar&parametro=".($paginaActual-1)."'>Anterior</a></li>";
+    				    echo "<li><a href='index.php?controlador=Marca&operacion=listar&parametro=".($paginaActual-1)."'>Anterior</a></li>";
     				}
 				    //poner enlace a la página siguiente
     				if($paginaActual<$paginas-1){
-    				    echo "<li><a href='index.php?controlador=Receta&operacion=listar&parametro=".($paginaActual+1)."'>Siguiente</a></li>";
+    				    echo "<li><a href='index.php?controlador=Marca&operacion=listar&parametro=".($paginaActual+1)."'>Siguiente</a></li>";
     				}
     				
 				    //Poner enlace a la última página
 				    if($paginas>1 && $paginaActual<$paginas){
-				        echo "<li><a href='index.php?controlador=Receta&operacion=listar&parametro=$paginas'>Ultima</a></li>";
+				        echo "<li><a href='index.php?controlador=Marca&operacion=listar&parametro=$paginas'>Ultima</a></li>";
 				    }
 				?>
 			</ul>
 			<p class="infolista">Viendo la página <?php echo $paginaActual.' de '.$paginas; ?> páginas de resultados</p>
-			
-			
-			<p class="volver" onclick="history.back();">Atrás</p>
-		
+								
 		</section>
 		
 		<?php Template::footer();?>

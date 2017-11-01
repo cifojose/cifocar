@@ -12,16 +12,16 @@
 		<?php 
 			
 
-			if(!$usuario) Template::login(); //pone el formulario de login
-			else Template::logout($usuario); //pone el formulario de logout
-			Template::header(); //pone el header
-			//Template::menu($usuario); //pone el menú
+		if($usuario) Template::logout($usuario); //pone el formulario de login
+		
+		Template::header(); //pone el header
+		Template::menu($usuario); //pone el menu
 		?>
 		
 		<section id="content" class="exito">
 			<h2>Exito</h2>
 			<?php echo '<p>'.$mensaje.'</p><br/>'; ?>
-			<input class="boton" type="button" name="inicio" value="Inicio" onclick="location.href='index.php';"/><br/>
+			<input class="boton" type="button" name="inicio" value="Inicio" onclick="history.back()"/><br/>
 		</section>
 		
 		<?php Template::footer();?>

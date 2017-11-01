@@ -26,7 +26,7 @@
 			//ejecutar la consulta
 			Database::get()->query($consulta);
 			//retornar el numero de filas afectadas 1 se hizo bien, 0 no se modifico nada
-			return Database::get()->affected_rows();
+			return Database::get()->affected_rows;
 		}
 		
 		//método que me recupera el total de registros (incluso con filtros)

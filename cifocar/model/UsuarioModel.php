@@ -13,6 +13,13 @@
 			return Database::get()->query($consulta);
 		}
 		
+		//actualiza los privilegios del usuario en la BDD
+		public function actualizarPrivi(){
+		    $user_table = Config::get()->db_user_table;
+		    $consulta = "UPDATE $user_table
+							  SET privilegio=$this->privilegio, admin=$this->admin WHERE user='$this->user';";
+		    return Database::get()->query($consulta);
+		}
 		
 		//actualiza los datos del usuario en la BDD
 		public function actualizar(){
@@ -31,7 +38,9 @@
 		public function borrar(){
 			$user_table = Config::get()->db_user_table;
 			$consulta = "DELETE FROM $user_table WHERE user='$this->user';";
-			return Database::get()->query($consulta);
+			$conexion=Database::get();
+			$conexion->query($consulta);
+			return $conexion->affected_rows;
 		}
 		
 		
@@ -63,6 +72,21 @@
 			$resultado->free();
 			
 			return $us;
-		}	
+		}
+		
+		//este método debería retornar un usuario creado con los datos
+		//de la BDD (o NULL si no existe), a partir de un nombre de usuario
+		public static function getUsuarios(){
+		    $user_table = Config::get()->db_user_table;
+		    $consulta = "SELECT * FROM $user_table;";
+		    $resultado = Database::get()->query($consulta);
+		    
+		    $listaUsuarios=array();
+		    while ($usuario=$resultado->fetch_object('UsuarioModel'))
+		        $listaUsuarios[]=$usuario;
+		    
+		    $resultado->free();
+		    return $listaUsuarios;
+		}
 	}
 ?>

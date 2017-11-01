@@ -11,94 +11,45 @@
 	
 	<body>
 		<?php 
-			Template::header(); //pone el header
+			
 
-			if(!$usuario) Template::login(); //pone el formulario de login
-			else Template::logout($usuario); //pone el formulario de logout
-			
-			Template::menu($usuario); //pone el menú
-		?>
+		if($usuario) Template::logout($usuario); //pone el formulario de login
 		
+		Template::header(); //pone el header
+		Template::menu($usuario); //pone el menu
+		?>
+	
 		<section id="content">
-			<h2>Listado de usuarios</h2>
-			
-			<p class="infolista">Hay <?php echo $totalRegistros; ?> registros<?php echo $filtro? ' para el filtro indicado':'';?>, 
-			mostrando del <?php echo ($paginaActual-1)*$regPorPagina+1;?> al <?php echo ($paginaActual-1)*$regPorPagina+sizeof($recetas);?>.</p>
-			
-			<?php if(!$filtro){?>
-			<form method="post" class="filtro" action="index.php?controlador=Receta&operacion=listar&parametro=1">
-				<label>Filtro:</label>
-				<input type="text" name="texto" placeholder="buscar..."/>
-				<select name="campo">
-					<option value="nombre">inicio</option>
-					<option value="dificultad">vehiculos</option>
-					<option value="tiempo">marcas</option>
-				</select>
-				<label>Orden:</label>
-				<select name="campoOrden">
-					<option value="nombre">inicio</option>
-					<option value="dificultad">vehiculos</option>
-					<option value="tiempo">marcas</option>
-				</select>
-				<select name="sentidoOrden">
-					<option value="ASC">ascendente</option>
-					<option value="DESC">descendente</option>
-				</select>
-				<input type="submit" name="filtrar" value="Filtrar"/>
-			</form>
-			<?php }else{ ?>
-			    <form method="post" class="filtro" action="index.php?controlador=Receta&operacion=listar&parametro=1">
-			    	<label>Quitar filtro (<?php echo $filtro->campo.": '".$filtro->texto."', ordenado: ".$filtro->campoOrden." ".$filtro->sentidoOrden;?>)</label>
-			    	<input type="submit" name="quitarFiltro" value="Quitar" />
-			    </form>
-			<?php }?>
-			
+			<h1 style="text-align: center; color:blue">Listado de usuarios</h1>
+								
 			<table>
 				<tr>
 					<th>Imagen</th>
 					<th>Nombre</th>
-					<th>Dificultad</th>
-					<th>Tiempo</th>
-					<th>Operaciones</th>
+					<th>Departamento</th>
+					<th>Administrador</th>
+					<th>Email</th>					
+					<th colspan="3">Operaciones</th>
 				</tr>
 				<?php 
-				foreach($recetas as $receta){
+				foreach($usuarios as $usuario){
 				    echo "<tr>";
-				        echo "<td class='foto'><img class='miniatura' src='$receta->imagen' alt='Imagen de $receta->nombre' title='Imagen de $receta->nombre'/></td>";
-				        echo "<td>$receta->nombre</td>";
-				        echo "<td>$receta->dificultad</td>";
-				        echo "<td>$receta->tiempo</td>";
-				        echo "<td class='foto'><a href='index.php?controlador=Receta&operacion=ver&parametro=$receta->id'><img class='boton' src='images/buttons/view.png' alt='ver detalles' title='ver detalles'/></a></td>";
-				    echo "</tr>";
+				        echo "<td class='foto celda'><img class='miniatura' src='$usuario->imagen' alt='Avatar del user $usuario->user' title='Avatar del user $usuario->user'/></td>";
+				        echo "<td>$usuario->nombre</td>";
+				        switch ($usuario->privilegio){
+				            case 0: echo"<td class='celda'>Sistemas</td>";break;
+				            case 1: echo"<td class='celda'>Compras</td>";break;
+				            case 2: echo"<td class='celda'>Ventas</td>";break;}
+				        echo ($usuario->admin)? "<td class='celda'>Si</td>" : "<td class='celda'>No</td>";
+				        echo "<td>$usuario->email</td>";
+				        echo "<td class='operaciones celda'><a href='index.php?controlador=Usuario&operacion=ver&parametro=$usuario->user'><img class='icono' src='images/buttons/view.png' alt='ver detalles' title='Detalles del usuario'/></a></td>";
+				        echo "<td class='operaciones celda'><a href='index.php?controlador=Usuario&operacion=editar&parametro=$usuario->user'><img class='icono' src='images/buttons/edit.png' alt='editar' title='Editar privilegios'/></a></td>";
+				        echo "<td class='operaciones celda'><a href='index.php?controlador=Usuario&operacion=baja&parametro=$usuario->user'><img class='icono' src='images/buttons/delete.png' alt='borrar' title='Borrar usuario'/></a></td>";
+				        echo "</tr>";
 				}
 				?>
 			</table>
-			<ul class="paginacion">
-				<?php
-    				//poner enlace a la página anterior
-    				if($paginaActual>1){
-    				    echo "<li><a href='index.php?controlador=Receta&operacion=listar&parametro=1'>Primera</a></li>";
-    				}
-				
-				    //poner enlace a la página anterior
-    				if($paginaActual>2){
-    				    echo "<li><a href='index.php?controlador=Receta&operacion=listar&parametro=".($paginaActual-1)."'>Anterior</a></li>";
-    				}
-				    //poner enlace a la página siguiente
-    				if($paginaActual<$paginas-1){
-    				    echo "<li><a href='index.php?controlador=Receta&operacion=listar&parametro=".($paginaActual+1)."'>Siguiente</a></li>";
-    				}
-    				
-				    //Poner enlace a la última página
-				    if($paginas>1 && $paginaActual<$paginas){
-				        echo "<li><a href='index.php?controlador=Receta&operacion=listar&parametro=$paginas'>Ultima</a></li>";
-				    }
-				?>
-			</ul>
-			<p class="infolista">Viendo la página <?php echo $paginaActual.' de '.$paginas; ?> páginas de resultados</p>
 			
-			
-			<p class="volver" onclick="history.back();">Atrás</p>
 		
 		</section>
 		

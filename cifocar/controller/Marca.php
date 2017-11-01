@@ -27,7 +27,7 @@
 	            $filtro = empty($_SESSION['filtroMarcas'])? false : unserialize($_SESSION['filtroMarcas']);
 	            
 	            //para la paginación
-	            $num = 5; //numero de resultados por página
+	            $num = 10; //numero de resultados por página
 	            $pagina = abs(intval($pagina)); //para evitar cosas raras por url
 	            $pagina = empty($pagina)? 1 : $pagina; //página a mostrar
 	            $offset = $num*($pagina-1); //offset
@@ -79,15 +79,14 @@
 			}else{
 				//crear una instancia de Marca
 			    $this->load('model/MarcaModel.php');
-				$marca = new MarcaModel();
 				$conexion = Database::get();
 				
 				//tomar los datos que vienen por POST
 				//real_escape_string evita las SQL Injections
-				$marca->marca = $conexion->real_escape_string($_POST['marca']);
+				$marca = $conexion->real_escape_string($_POST['marca']);
 															
 				//guardar la marca en BDD
-				if(!$marca->nueva())
+				if(!MarcaModel::nueva($conexion->real_escape_string($_POST['marca'])))
 					throw new Exception('No se pudo agregar la nueva marca '.$marca);
 				
 				//mostrar la vista de éxito
@@ -141,6 +140,7 @@
 		    if(Login::getUsuario()->privilegio !=1)
 		        throw new Exception('Debe ser Responsable de compras para eliminar una marca');
 			
+		    $this->load('model/MarcaModel.php');
 			//si no nos están enviando la conformación de baja
 			//cargamos el formulario de confirmación
 			if(empty($_POST['confirmar'])){	

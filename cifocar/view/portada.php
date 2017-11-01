@@ -13,17 +13,12 @@
 		<?php 
 			if(!$usuario) Template::login(); //pone el formulario de login
 			else Template::logout($usuario); //pone el formulario de logout
+			Template::header(); //pone el header
+			Template::menu($usuario); //pone el menú
 		?>
 
-		<div class="centrar">
-			<figure>
-    			<img src="images/logos/logo.png" />
-    		</figure>
-
-
-  			<h1>Area de login</h1>
-  
-			bla blab lablablabl
+		<div >
+			<?php Template::footer();?>
 		</div>
     </body> 
 </html>

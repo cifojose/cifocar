@@ -13,10 +13,10 @@
 		<?php 
 			
 
-			if(!$usuario) Template::login(); //pone el formulario de login
-			else Template::logout($usuario); //pone el formulario de logout
-			Template::header(); //pone el header
-			//Template::menu($usuario); //pone el menú
+		if($usuario) Template::logout($usuario); //pone el formulario de login
+		
+		Template::header(); //pone el header
+		Template::menu($usuario); //pone el menú
 		?>
 		
 		<section id="content" class="error">

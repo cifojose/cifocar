@@ -3,7 +3,7 @@
 	class Vehiculo extends Controller{
 
 		//PROCEDIMIENTO PARA GUARDAR UN NUEVO VEHICULO
-		public function nueva(){
+		public function nuevo(){
 		    //comprobar si el usuario es responsable de compras
 		    if(Login::getUsuario()->privilegio !=1)
 		        throw new Exception('Debe ser Responsable de compras para crear un nuevo vehiculo');
@@ -13,7 +13,8 @@
 				//mostramos la vista del formulario
 				$datos = array();
 				$datos['usuario'] = Login::getUsuario();
-				$this->load_view('view/vehiculos/nueva.php', $datos);
+				$datos['max_image_size'] = 2000000;
+				$this->load_view('view/vehiculos/registro.php', $datos);
 			
 			//si llegan los datos por POST
 			}else{
@@ -64,7 +65,7 @@
 		
 		
 		//PROCEDIMINETO PARA MODIFICAR EL ESTADO DE UN VEHICULO
-		public static function modificarEstado($id){
+		public function modificarEstado($id){
 		    //comprobar si el usuario es vendedor
 		    if(Login::getUsuario()->privilegio !=2)
 		        throw new Exception('Debe ser Vendedor para modificar el estado de un vehiculo');
@@ -72,6 +73,7 @@
 		    //Verificamos si llega la ID
 		    if(!$id)
 		      throw new Exception('No se ha seleccionado una ID valida');
+		    
 		    //recuperamos el vehiculo
 		    $this->load('model/VehiculoModel.php');
 		    $vehiculo = VehiculoModel::getVehiculo($id);
@@ -97,8 +99,8 @@
 	                throw new Exception('No se ha podido modificar el estado del vehiculo con id '.$id);
 	            //enviar datos vista de exito
 	            $datos = array();
-	            $datos = ['usuario'] = Login::getUsuario();
-	            $datos = ['mensaje'] = "La modificacion del estado del vehiculo con id $id se ha realizado correctamente";
+	            $datos['usuario'] = Login::getUsuario();
+	            $datos['mensaje'] = "La modificacion del estado del vehiculo con id $id se ha realizado correctamente";
 	            $this->load_view('view/exito.php', $datos);
 	        }
 		}
@@ -106,6 +108,9 @@
 		
 		//PROCEDIMIENTO PARA LISTAR LAS VEHICULOS
 		public function listar($pagina){
+		    if(!Login::getUsuario())
+		        throw new Exception('Debe estar registrado para poder listar vehiculos');
+		    
 		    $this->load('model/VehiculoModel.php');
 		    
 		    //si me piden APLICAR un filtro
@@ -130,7 +135,7 @@
 	        $filtro = empty($_SESSION['filtroVehiculos'])? false : unserialize($_SESSION['filtroVehiculos']);
 		        
 		    //para la paginación
-		    $num = 7; //numero de resultados por página
+		    $num = 10; //numero de resultados por página
 		    $pagina = abs(intval($pagina)); //para evitar cosas raras por url
 		    $pagina = empty($pagina)? 1 : $pagina; //página a mostrar
 		    $offset = $num*($pagina-1); //offset
@@ -221,7 +226,7 @@
 		    //en caso contrario
 		      $conexion = Database::get();
 		      //actualizar los campos de la vehiculo con los datos POST
-		      $vehiculo->matricula = $conexion->real_escape_string($_POST['matricula']);
+		      //$vehiculo->matricula = $conexion->real_escape_string($_POST['matricula']);
 		      $vehiculo->modelo = $conexion->real_escape_string($_POST['modelo']);
 		      $vehiculo->color = $conexion->real_escape_string($_POST['color']);
 		      $vehiculo->precio_venta = $_POST['precio_venta'];
@@ -289,12 +294,12 @@
 	           
 	       
 		   //si no me envian el formulario de confirmación
-		   if(empty($_POST['confirmarborrado'])){
+		   if(empty($_POST['confirmar'])){
 		      //mostrar el formularion de confirmación junto con los datos del vehiculo
 		      $datos = array();
 		      $datos['usuario'] = Login::getUsuario();
 		      $datos['vehiculo'] = $vehiculo; 
-		      $this->load_view('view/vehiculos/confirmarborrado.php', $datos);
+		      $this->load_view('view/vehiculos/borrar.php', $datos);
 		   
 		   //si me envian el formulario...
 		   }else{
@@ -308,7 +313,7 @@
 		      //cargar la vista de éxito
 	          $datos = array();
 	          $datos['usuario'] = Login::getUsuario();
-	          $datos['mensaje'] = 'Operación de borrado ejecutada con éxito.';
+	          $datos['mensaje'] = 'Se ha borrado el vehículo con éxito.';
 	          $this->load_view('view/exito.php', $datos);
 		          
 		   }

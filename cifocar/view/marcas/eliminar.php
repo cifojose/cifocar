@@ -12,19 +12,20 @@
 	<body>
 		<?php 
 			
-		if($usuario) Template::logout($usuario); //pone el formulario de login
-		
-		Template::header(); //pone el header
-		Template::menu($usuario); //pone el menu
+
+			if(!$usuario) Template::login(); //pone el formulario de login
+			else Template::logout($usuario); //pone el formulario de logout
+			Template::header(); //pone el header
+			//Template::menu($usuario); //pone el menú
 		?>
 		
 		<section id="content">
-			<h2 style="text-align:center; color:blue">Borrar usuario</h2>
+			<h2 style="text-align:center; color:blue">Borrar marca</h2>
 			
 		
 			<form class="formulario" method="post" autocomplete="off">
-				<label>User:</label>
-				<input type="text" readonly="readonly" value="<?php echo $usuario->user;?>" /><br/>
+				<label>Marca:</label>
+				<input type="text" readonly="readonly" value="<?php echo $marca;?>" /><br/>
 				
 				<input class="boton" type="submit" name="confirmar" value="Confirmar"/>
 				<input class="boton" type="button" name="cancelar" value="Cancelar" onclick="history.back();"/><br/>

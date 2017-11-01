@@ -29,8 +29,8 @@
 				$u->user = $conexion->real_escape_string($_POST['user']);
 				$u->password = MD5($conexion->real_escape_string($_POST['password']));
 				$u->nombre = $conexion->real_escape_string($_POST['nombre']);
-				$u->privilegio = $_POST['privilegio'];
-				$u->admin = $_POST['admin'];
+				$u->privilegio = intval($_POST['privilegio']);
+				$u->admin = empty($_POST['admin'])? 0 : 1;
 				$u->email = $conexion->real_escape_string($_POST['email']);
 				$u->imagen = Config::get()->default_user_image;
 				
@@ -56,8 +56,12 @@
 			}
 		}
 		
+		
 		//PROCEDIMIENTO PARA LISTAR TODOS LOS USUARIOS
 	    public function listar(){
+	        //verificar si el usuario es administrador
+	        if(!Login::isAdmin())
+	            throw new Exception('Debe tener permisos de administrador para listar usuarios');
 	        //recuperar las recetas
 	        $this->load('model/UsuarioModel.php');
 	        $usuarios = UsuarioModel::getUsuarios();
@@ -66,8 +70,6 @@
 	        $datos = array();
 	        $datos['usuario'] = Login::getUsuario();
 	        $datos['usuarios'] = $usuarios;
-	        if(!Login::isAdmin())
-	            throw new Exception('Debe ser administrador para poder modificar usuarios');
 	        $this->load_view('view/usuarios/lista.php', $datos);
 	    }
 		
@@ -80,7 +82,7 @@
 	            
 	        //comprobar que me llega un id
 	        if(!$u)
-	           throw new Exception('No se indicó la id del usuario');
+	           throw new Exception('No se indicó el user del usuario');
 	                
             //recuperar la receta con esa id
             $this->load('model/UsuarioModel.php');
@@ -104,7 +106,7 @@
                 //actualizar los campos del usuario con los datos POST
                 $usuarioM->email=$conexion->real_escape_string($_POST['email']);
                 $usuarioM->privilegio= $_POST['privilegio'];
-                $usuarioM->admin = empty($_POST['admin'])? 0 : 1;;
+                $usuarioM->admin = empty($_POST['admin'])? 0 : 1;
                 	                        
                 //modificar el usuario en la BDD
                 if(!$usuarioM->actualizarPrivi())
@@ -193,13 +195,15 @@
 		
 		//PROCEDIMIENTO PARA DAR DE BAJA UN USUARIO
 		//solicita confirmación
-		public function baja(){		
+		public function baja($user){		
+		    //verificar si el usuario es administrador
+		    if(!Login::isAdmin())
+		        throw new Exception('Debe tener permisos de administrador para eliminar un usuario');
+			
 			//recuperar usuario
-			$u = Login::getUsuario();
+			$u = UsuarioModel::getUsuario($user);
 			
-			//asegurarse que el usuario está identificado
-			if(!$u) throw new Exception('Debes estar identificado para poder darte de baja');
-			
+					
 			//si no nos están enviando la conformación de baja
 			if(empty($_POST['confirmar'])){	
 				//carga el formulario de confirmación
@@ -209,25 +213,17 @@
 		
 			//si nos están enviando la confirmación de baja
 			}else{
-				//validar password
-				$p = MD5(Database::get()->real_escape_string($_POST['password']));
-				if($u->password != $p) 
-					throw new Exception('El password no coincide, no se puede procesar la baja');
-				
-				//de borrar el usuario actual en la BDD
+				//borrar el usuario seleccionado de la lista
 				if(!$u->borrar())
 					throw new Exception('No se pudo dar de baja');
 						
 				//borra la imagen (solamente en caso que no sea imagen por defecto)
 				if($u->imagen!=Config::get()->default_user_image)
 					@unlink($u->imagen); 
-			
-				//cierra la sesion
-				Login::log_out();
-					
+											
 				//mostrar la vista de éxito
 				$datos = array();
-				$datos['usuario'] = null;
+				$datos['usuario'] = Login::getUsuario();
 				$datos['mensaje'] = 'Eliminado OK';
 				$this->load_view('view/exito.php', $datos);
 			}
