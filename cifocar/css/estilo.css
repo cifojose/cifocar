@@ -134,6 +134,14 @@ img.logo{
 	text-align: center;
 }
 
+select{
+	margin-top: 5px;
+}
+textarea{
+	margin-top: 5px;
+	vertical-align: top;
+}
+
 /* ------------------------------------------------------------------------------------
 INICIO DE LOS ESTILOS PARA CADA UNO DE LOS ELEMENTOS 
 ------------------------------------------------------------------------------------ */

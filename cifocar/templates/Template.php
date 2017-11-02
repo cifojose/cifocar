@@ -8,7 +8,7 @@
     				<img src="images/logos/logo.png" />
     			</figure>
 				<hgroup>
-					<h1>Cifocar v 0.1</h1>
+					<h1>Cifocar v 1.1</h1>
 					<h2>Practica para la gestión de un concesionario de compra y venta de vehículos</h2>
 				</hgroup>
 			</header>

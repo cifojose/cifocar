@@ -34,8 +34,15 @@
     			<input readonly="readonly" style="color: black;" value="<?php echo $vehiculo->matricula;?>"/>Solo lectura<br/>        			
     			
     			<label>Marca:</label>
-    			<input type="text" name="marca" style="color: blue;" value="<?php echo $vehiculo->marca;?>"/><br/>
-    			
+    			<select name="marca">
+    			<?php foreach($marcas as $marca)
+    			         if ($marca == $vehiculo->marca)
+    			             echo "<option selected='selected' value='$marca'>$marca</option>";
+    			         else 
+    			             echo "<option value='$marca'>$marca</option>";
+    			?>
+    			</select>
+    			<br/>
     			<label>Modelo: </label>
     			<input type="text" name="modelo" style="color: blue;" value="<?php echo $vehiculo->modelo;?>"/><br/>
                 
@@ -50,6 +57,9 @@
                 
                 <label>P.Compra: </label>
     			<input type="number" name="precio_compra" style="color: blue;" value="<?php echo $vehiculo->precio_compra;?>"/><br/>      			
+                
+                <label>P.Venta: </label>
+    			<input type="number" name="precio_venta" style="color: blue;" value="<?php echo $vehiculo->precio_venta;?>"/><br/>
                 
                 <label>Matriculación: </label>
     			<input type="number" name="any_matriculacion" style="color: blue;" value="<?php echo $vehiculo->any_matriculacion;?>"/><br/>
@@ -73,6 +83,11 @@
                                                     case 4:echo "Baja";
                                                             break;
                                                 }?>"/>Solo lectura<br/>
+				<label>Nuevo avatar:</label>
+				<input type="hidden" name="MAX_FILE_SIZE" value="<?php echo $max_image_size;?>" />		
+				<input type="file" accept="image/*" name="imagen" />
+				<span class="mini">max <?php echo intval($max_image_size/1024);?>kb</span><br />
+				
 				<input class="boton" type="submit" name="modificar" value="Modificar"/>
 				<input class="boton" type="button" name="cancelar" value="Cancelar" onclick='history.back();'/><br/>
         	</form>

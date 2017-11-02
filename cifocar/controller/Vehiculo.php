@@ -7,19 +7,22 @@
 		    //comprobar si el usuario es responsable de compras
 		    if(Login::getUsuario()->privilegio !=1)
 		        throw new Exception('Debe ser Responsable de compras para crear un nuevo vehiculo');
-
+            
+		    $this->load('model/MarcaModel.php');
 			//si no llegan los datos a guardar
 			if(empty($_POST['guardar'])){
 				//mostramos la vista del formulario
 				$datos = array();
 				$datos['usuario'] = Login::getUsuario();
+				$datos['marcas'] = MarcaModel::getMarcas();
 				$datos['max_image_size'] = 2000000;
 				$this->load_view('view/vehiculos/registro.php', $datos);
 			
 			//si llegan los datos por POST
 			}else{
 				//crear una instancia del Vehiculo
-				$this->load('model/VehiculoModel.php');
+			    $this->load('model/VehiculoModel.php');
+			    //$this->load('config/Config.php');
 				$vehiculo = new VehiculoModel();
 				$conexion = Database::get();
 				
@@ -35,20 +38,21 @@
 				$vehiculo->estado = $_POST['estado'];
 				$vehiculo->any_matriculacion = $_POST['any_matriculacion'];
 				$vehiculo->detalles = $conexion->real_escape_string($_POST['detalles']);
-				$vehiculo->imagen = $conexion->real_escape_string($_POST['imagen']);
 				$vehiculo->marca = $_POST['marca'];
 				
 			
 				//recuperar el fichero
-				$fichero = $_FILES['imagen'];
 				
-				$destino = 'images/vehiculos/';
-				$tam_maximo = 2000000; //2MB aprox
-				$renombrar = true;
-				
-				$upload = new Upload($fichero, $destino, $tam_maximo, $renombrar);
-				$vehiculo->imagen = $upload->upload_image();
-							
+				if (empty($_FILES['imagen']['size'])){
+				    $vehiculo->imagen = Config::get()->image_not_found;
+				}else{
+				    $fichero = $_FILES['imagen'];
+				    $destino = 'images/vehiculos/';
+    				$tam_maximo = 2000000; //2MB aprox
+	       			$renombrar = true;
+			     	$upload = new Upload($fichero, $destino, $tam_maximo, $renombrar);
+				    $vehiculo->imagen = $upload->upload_image();
+				 }		
 				//guardar la vehiculo en BDD
 				if(!$vehiculo->nuevo()){
 				    unlink($vehiculo->imagen);
@@ -208,6 +212,7 @@
 		        
 		    //recuperar la vehiculo con esa id
 		    $this->load('model/VehiculoModel.php');
+		    $this->load('model/MarcaModel.php');
 		    $vehiculo = VehiculoModel::getVehiculo($id);
 		    
 		    //comprobar que existe la vehiculo
@@ -220,6 +225,8 @@
 		        $datos = array();
 		        $datos['usuario'] = Login::getUsuario();
 		        $datos['vehiculo'] = $vehiculo;
+		        $datos['marcas'] = MarcaModel::getMarcas();
+		        $datos['max_image_size'] = 2000000;
 		        $this->load_view('view/vehiculos/modificar.php', $datos);
 
 		    }else{
@@ -233,18 +240,16 @@
 		      $vehiculo->precio_compra = $_POST['precio_compra'];
 		      $vehiculo->kms = $_POST['kms'];
 		      $vehiculo->caballos = $_POST['caballos'];
-		      $vehiculo->estado = $_POST['estado'];
 		      $vehiculo->any_matriculacion = $_POST['any_matriculacion'];
 		      $vehiculo->detalles = $conexion->real_escape_string($_POST['detalles']);
-		      $vehiculo->imagen = $conexion->real_escape_string($_POST['imagen']);
 		      $vehiculo->marca = $_POST['marca'];
-		      		      
+		      $fotoAntigua = $vehiculo->imagen;		      
 		      //tratamiento de la imagen
 		      $fichero = $_FILES['imagen'];
 		      
 		      //si me indican una nueva imagen
 		      if($fichero['error']!=UPLOAD_ERR_NO_FILE){
-		          $fotoAntigua = $vehiculo->imagen;
+		          
 		          
 		          //subir la nueva imagen
 		          $destino = 'images/vehiculos/';
@@ -257,7 +262,7 @@
 		      }
 		      
 		      //modificar el vehiculo en la BDD
-		      if(!$vehiculo->actualizar()){
+		      if(!$vehiculo->modificar()){
 		          //borrar la foto nueva
 		          unlink($fotoNueva);
 		          throw new Exception('No se pudo actualizar las modificaciones en el vehiculo con id '.$id);

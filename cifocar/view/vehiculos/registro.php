@@ -26,11 +26,16 @@
 			<form class="formulario" method="post" enctype="multipart/form-data" autocomplete="off">
 				
     			<label>Matrícula:</label>
-    			<input type="number" name="matricula" required="required"/><br/>        			
+    			<input type="text" name="matricula" required="required"/><br/>        			
     			
     			<label>Marca:</label>
-    			<input type="text" name="marca" required="required"/><br/>
-    			
+    			<select name="marca" required="required">
+    				<?php
+    				     foreach ($marcas as $marca)
+    			         echo "<option value='".$marca."'>".$marca."</option>";
+    			     ?>
+    			</select><br/>
+    			    			
     			<label>Modelo: </label>
     			<input type="text" name="modelo" required="required"/><br/>
                 
@@ -69,7 +74,7 @@
 				<input type="file" accept="image/*" name="imagen" />
 				<span>max <?php echo intval($max_image_size/1024);?>kb</span><br />
                 
-				<input class="boton" type="submit" name="modificar" value="Modificar"/>
+				<input class="boton" type="submit" name="guardar" value="Aceptar"/>
 				<input class="boton" type="button" name="cancelar" value="Cancelar" onclick='history.back();'/><br/>
         	</form>
     		<br/>	
