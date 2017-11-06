@@ -56,6 +56,8 @@
 			//elimina la cookie de sesión (reseteará el ID de sesión)
 			$p = session_get_cookie_params();
 			setcookie(session_name(),'',time()-1000,$p['path'],$p['domain'],$p['secure'],$p['httponly']);
+			header("refresh:0;url=index.php");
+			exit();
 		}
 		
 		
